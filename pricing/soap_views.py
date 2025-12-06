@@ -1,6 +1,7 @@
 from spyne import Application, rpc, ServiceBase, Unicode, Decimal
 from spyne.protocol.soap import Soap11
 from spyne.server.django import DjangoApplication
+from django.views.decorators.csrf import csrf_exempt
 from .models import Price, PricingRule, SpecialPrice
 from inventory.models import Product
 
@@ -78,4 +79,4 @@ pricing_soap_app = Application(
     out_protocol=Soap11()
 )
 
-pricing_soap_application = DjangoApplication(pricing_soap_app)
+pricing_soap_application = csrf_exempt(DjangoApplication(pricing_soap_app))

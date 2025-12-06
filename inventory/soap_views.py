@@ -1,6 +1,7 @@
 from spyne import Application, rpc, ServiceBase, Unicode, Integer, Decimal, Boolean
 from spyne.protocol.soap import Soap11
 from spyne.server.django import DjangoApplication
+from django.views.decorators.csrf import csrf_exempt
 from .models import Product, Inventory, Listing
 
 
@@ -82,4 +83,5 @@ inventory_soap_app = Application(
     out_protocol=Soap11()
 )
 
-inventory_soap_application = DjangoApplication(inventory_soap_app)
+# Apply CSRF exemption to the Django application view
+inventory_soap_application = csrf_exempt(DjangoApplication(inventory_soap_app))

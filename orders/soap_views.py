@@ -1,6 +1,7 @@
 from spyne import Application, rpc, ServiceBase, Unicode, Integer, Decimal, DateTime
 from spyne.protocol.soap import Soap11
 from spyne.server.django import DjangoApplication
+from django.views.decorators.csrf import csrf_exempt
 from .models import Order, OrderItem, OrderCancellation
 from django.utils import timezone
 
@@ -73,4 +74,4 @@ orders_soap_app = Application(
     out_protocol=Soap11()
 )
 
-orders_soap_application = DjangoApplication(orders_soap_app)
+orders_soap_application = csrf_exempt(DjangoApplication(orders_soap_app))

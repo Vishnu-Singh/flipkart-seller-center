@@ -1,6 +1,7 @@
 from spyne import Application, rpc, ServiceBase, Unicode
 from spyne.protocol.soap import Soap11
 from spyne.server.django import DjangoApplication
+from django.views.decorators.csrf import csrf_exempt
 from .models import Shipment, ShipmentTracking, CourierPartner
 from django.utils import timezone
 
@@ -100,4 +101,4 @@ shipments_soap_app = Application(
     out_protocol=Soap11()
 )
 
-shipments_soap_application = DjangoApplication(shipments_soap_app)
+shipments_soap_application = csrf_exempt(DjangoApplication(shipments_soap_app))
