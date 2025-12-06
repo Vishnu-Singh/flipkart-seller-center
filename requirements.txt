@@ -1,0 +1,7 @@
+Django==6.0
+djangorestframework==3.16.1
+git+https://github.com/arskom/spyne.git
+lxml==6.0.2
+requests==2.31.0
+pytz==2024.1
+
