@@ -1,0 +1,103 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}Home - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🚀 Welcome to Flipkart Seller Center API Documentation</h1>
+    <p style="font-size: 1.1rem; margin-top: 1rem;">
+        Complete documentation for the Flipkart Seller Center APIs with both REST and SOAP support.
+    </p>
+</div>
+
+<div class="card">
+    <h2>📊 Quick Stats</h2>
+    <div class="grid">
+        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">6</div>
+            <div>API Applications</div>
+        </div>
+        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">36+</div>
+            <div>REST Endpoints</div>
+        </div>
+        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">42+</div>
+            <div>SOAP Operations</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔧 API Applications</h2>
+    <p>Our APIs are organized into six main applications based on business domains:</p>
+    <div class="grid">
+        {% for app in apps %}
+        <a href="{% url 'documentation:api_docs' app.slug %}" style="text-decoration: none; color: inherit;">
+            <div class="card" style="cursor: pointer; transition: transform 0.2s; margin: 0;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">{{ app.icon }}</div>
+                <h3 style="margin-top: 0;">{{ app.name }}</h3>
+                <p>{{ app.description }}</p>
+                <span class="btn" style="margin-top: 1rem; font-size: 0.9rem;">View Documentation →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <h2>🚀 Getting Started</h2>
+    <p>Follow these quick steps to get started with the Flipkart Seller Center APIs:</p>
+    <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+        <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'documentation:setup' %}">Install and configure</a> the Django project
+        </li>
+        <li style="margin-bottom: 0.5rem;">
+            Run migrations and populate sample data
+        </li>
+        <li style="margin-bottom: 0.5rem;">
+            Start the development server
+        </li>
+        <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'documentation:api_reference' %}">Explore the API endpoints</a>
+        </li>
+    </ol>
+    <a href="{% url 'documentation:quick_start' %}" class="btn" style="margin-top: 1rem;">Quick Start Guide →</a>
+</div>
+
+{% if latest_version %}
+<div class="card">
+    <h2>📝 Latest Release</h2>
+    <h3>Version {{ latest_version.version }} - {{ latest_version.title }}</h3>
+    <p><strong>Released:</strong> {{ latest_version.release_date }}</p>
+    <p>{{ latest_version.description }}</p>
+    <a href="{% url 'documentation:changelog' %}" class="btn" style="margin-top: 1rem;">View Full Changelog →</a>
+</div>
+{% endif %}
+
+<div class="card">
+    <h2>📚 Documentation Sections</h2>
+    <div class="grid">
+        <div>
+            <h3>🎯 Quick Start</h3>
+            <p>Get up and running in minutes with our quick start guide.</p>
+            <a href="{% url 'documentation:quick_start' %}">Read more →</a>
+        </div>
+        <div>
+            <h3>⚙️ Setup Guide</h3>
+            <p>Detailed installation and configuration instructions.</p>
+            <a href="{% url 'documentation:setup' %}">Read more →</a>
+        </div>
+        <div>
+            <h3>📖 API Reference</h3>
+            <p>Complete reference for all REST and SOAP endpoints.</p>
+            <a href="{% url 'documentation:api_reference' %}">Read more →</a>
+        </div>
+        <div>
+            <h3>🔍 Troubleshooting</h3>
+            <p>Common issues and their solutions.</p>
+            <a href="{% url 'documentation:troubleshooting' %}">Read more →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}{{ app_name|title }} API - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ app_name|title }} API Documentation</h1>
+    <p>Detailed documentation for the {{ app_name|title }} API endpoints.</p>
+</div>
+
+{% if use_fallback and fallback_data %}
+<div class="card">
+    <h2>{{ fallback_data.description }}</h2>
+    
+    <h3><span class="badge badge-rest">REST</span> API Endpoints</h3>
+    {% for endpoint in fallback_data.rest_endpoints %}
+    <div style="border-left: 3px solid #667eea; padding-left: 1rem; margin: 1.5rem 0; background: #f8f9fa; padding: 1rem; border-radius: 5px;">
+        <p style="margin-bottom: 0.5rem;">
+            <span class="badge badge-{{ endpoint.method|lower }}">{{ endpoint.method }}</span>
+            <code style="font-size: 1rem;">{{ endpoint.path }}</code>
+        </p>
+        <p style="margin: 0.5rem 0;"><strong>{{ endpoint.description }}</strong></p>
+        {% if endpoint.parameters %}
+        <p style="margin: 0.5rem 0;"><strong>Parameters:</strong></p>
+        <ul style="margin-left: 1.5rem;">
+            {% for param in endpoint.parameters %}
+            <li><code>{{ param }}</code></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if endpoint.returns %}
+        <p style="margin: 0.5rem 0;"><strong>Returns:</strong> {{ endpoint.returns }}</p>
+        {% endif %}
+        {% if endpoint.body %}
+        <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer; font-weight: 600;">Request Body Example</summary>
+            <pre style="margin-top: 0.5rem;"><code>{{ endpoint.body|safe }}</code></pre>
+        </details>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <h3><span class="badge badge-soap">SOAP</span> API Operations</h3>
+    <p><strong>WSDL Location:</strong> <code>http://localhost:8000/{{ app_name }}/soap/?wsdl</code></p>
+    
+    {% for operation in fallback_data.soap_operations %}
+    <div style="border-left: 3px solid #2196F3; padding-left: 1rem; margin: 1.5rem 0; background: #f0f8ff; padding: 1rem; border-radius: 5px;">
+        <p style="margin-bottom: 0.5rem;"><strong>Operation:</strong> <code style="font-size: 1rem;">{{ operation.operation }}</code></p>
+        <p style="margin: 0.5rem 0;">{{ operation.description }}</p>
+        {% if operation.parameters %}
+        <p style="margin: 0.5rem 0;"><strong>Parameters:</strong></p>
+        <ul style="margin-left: 1.5rem;">
+            {% for param in operation.parameters %}
+            <li><code>{{ param }}</code></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card">
+    <h2><span class="badge badge-rest">REST</span> API Endpoints</h2>
+    {% if rest_endpoints %}
+        {% for endpoint in rest_endpoints %}
+        <div style="border-left: 3px solid #667eea; padding-left: 1rem; margin: 1.5rem 0;">
+            <p>
+                <span class="badge badge-{{ endpoint.method|lower }}">{{ endpoint.method }}</span>
+                <code>{{ endpoint.endpoint_path }}</code>
+            </p>
+            <p><strong>{{ endpoint.title }}</strong></p>
+            <p>{{ endpoint.description }}</p>
+            {% if endpoint.example_request %}
+            <details>
+                <summary style="cursor: pointer;">Example Request</summary>
+                <pre><code>{{ endpoint.example_request }}</code></pre>
+            </details>
+            {% endif %}
+            {% if endpoint.example_response %}
+            <details>
+                <summary style="cursor: pointer;">Example Response</summary>
+                <pre><code>{{ endpoint.example_response }}</code></pre>
+            </details>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No REST endpoints documented yet for this application.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2><span class="badge badge-soap">SOAP</span> API Operations</h2>
+    <p><strong>WSDL:</strong> <code>/{{ app_name }}/soap/?wsdl</code></p>
+    {% if soap_endpoints %}
+        {% for endpoint in soap_endpoints %}
+        <div style="border-left: 3px solid #2196F3; padding-left: 1rem; margin: 1.5rem 0;">
+            <p><strong>{{ endpoint.title }}</strong></p>
+            <p>{{ endpoint.description }}</p>
+            {% if endpoint.example_request %}
+            <details>
+                <summary style="cursor: pointer;">Example SOAP Request</summary>
+                <pre><code>{{ endpoint.example_request }}</code></pre>
+            </details>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No SOAP operations documented yet for this application.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h2>Code Examples</h2>
+    
+    <h3>cURL Example</h3>
+    <pre><code>curl http://localhost:8000/{{ app_name }}/api/</code></pre>
+    
+    <h3>Python Example</h3>
+    <pre><code>import requests
+
+response = requests.get('http://localhost:8000/{{ app_name }}/api/')
+data = response.json()
+print(data)</code></pre>
+</div>
+
+<div class="card">
+    <h2>Related APIs</h2>
+    <p>Explore other API applications:</p>
+    <div class="grid">
+        <a href="{% url 'documentation:api_docs' 'orders' %}" class="btn">Orders</a>
+        <a href="{% url 'documentation:api_docs' 'inventory' %}" class="btn">Inventory</a>
+        <a href="{% url 'documentation:api_docs' 'pricing' %}" class="btn">Pricing</a>
+        <a href="{% url 'documentation:api_docs' 'returns' %}" class="btn">Returns</a>
+        <a href="{% url 'documentation:api_docs' 'shipments' %}" class="btn">Shipments</a>
+        <a href="{% url 'documentation:api_docs' 'reports' %}" class="btn">Reports</a>
+    </div>
+</div>
+{% endblock %}

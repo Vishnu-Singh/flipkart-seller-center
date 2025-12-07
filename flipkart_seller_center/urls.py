@@ -60,6 +60,9 @@ urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
     
+    # Documentation
+    path('docs/', include('documentation.urls')),
+    
     # Orders API (REST and SOAP)
     path('orders/', include('orders.urls')),
     

@@ -2,6 +2,18 @@
 
 A comprehensive Django-based application implementing Flipkart Seller Center APIs with both REST and SOAP endpoints.
 
+## 📚 Documentation
+
+**Complete interactive documentation is available at: `http://localhost:8000/docs/`**
+
+The documentation app provides:
+- Quick start guides
+- Detailed setup instructions
+- Complete API reference for all endpoints
+- Code examples
+- Troubleshooting guides
+- Changelog
+
 ## Project Overview
 
 This project provides a complete API suite for managing Flipkart seller operations, organized into six main API classifications:
@@ -20,6 +32,7 @@ This project provides a complete API suite for managing Flipkart seller operatio
 - **SOAP API**: SOAP endpoints using Spyne for legacy system integration
 - **Comprehensive Models**: Well-structured database models for all entities
 - **Viewsets**: Complete CRUD operations with custom actions
+- **Interactive Documentation**: Web-based documentation with examples
 - **API Documentation**: Browsable REST API and WSDL for SOAP
 
 ## Installation

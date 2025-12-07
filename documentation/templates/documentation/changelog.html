@@ -1,0 +1,78 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}Changelog - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📝 Changelog</h1>
+    <p>Track all changes, updates, and improvements to the Flipkart Seller Center APIs.</p>
+</div>
+
+{% if versions %}
+    {% for version in versions %}
+    <div class="card">
+        <h2>
+            Version {{ version.version }}
+            {% if version.is_major %}
+            <span class="badge" style="background: #f93e3e;">Major Release</span>
+            {% endif %}
+        </h2>
+        <p><strong>Released:</strong> {{ version.release_date|date:"F d, Y" }}</p>
+        <h3>{{ version.title }}</h3>
+        <p>{{ version.description }}</p>
+        
+        {% if version.changes %}
+        <h4>Changes:</h4>
+        <ul style="margin-left: 1.5rem;">
+            {% for change in version.changes %}
+            <li>{{ change }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+<div class="card">
+    <h2>Version 1.0.0 - Initial Release</h2>
+    <p><strong>Released:</strong> December 6, 2025</p>
+    
+    <h3>🎉 Initial Release</h3>
+    <p>First stable release of the Flipkart Seller Center API project.</p>
+    
+    <h4>Features:</h4>
+    <ul style="margin-left: 1.5rem;">
+        <li>✅ Complete Django project with 6 API applications</li>
+        <li>✅ REST APIs using Django REST Framework</li>
+        <li>✅ SOAP APIs using Spyne with WSDL support</li>
+        <li>✅ 36+ REST endpoints across all applications</li>
+        <li>✅ 42+ SOAP operations across all applications</li>
+        <li>✅ Comprehensive models for all business entities</li>
+        <li>✅ Django admin interface for all models</li>
+        <li>✅ Sample data generation command</li>
+        <li>✅ Complete documentation</li>
+    </ul>
+    
+    <h4>Applications:</h4>
+    <ul style="margin-left: 1.5rem;">
+        <li><strong>Orders:</strong> Manage orders, cancellations, and order items</li>
+        <li><strong>Inventory:</strong> Manage products, inventory levels, and listings</li>
+        <li><strong>Pricing:</strong> Manage prices, pricing rules, and special promotions</li>
+        <li><strong>Returns:</strong> Handle returns, replacements, and refunds</li>
+        <li><strong>Shipments:</strong> Manage shipments, tracking, and courier partners</li>
+        <li><strong>Reports:</strong> Generate and download various reports</li>
+    </ul>
+</div>
+{% endif %}
+
+<div class="card">
+    <h2>Upcoming Features</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li>🔜 JWT Authentication</li>
+        <li>🔜 API Rate Limiting</li>
+        <li>🔜 Webhook Support</li>
+        <li>🔜 Advanced Filtering</li>
+        <li>🔜 Bulk Operations</li>
+        <li>🔜 Comprehensive Test Suite</li>
+    </ul>
+</div>
+{% endblock %}
