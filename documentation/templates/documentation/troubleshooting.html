@@ -1,0 +1,130 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}Troubleshooting - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🔍 Troubleshooting Guide</h1>
+    <p>Common issues and their solutions.</p>
+</div>
+
+<div class="card">
+    <h2>Installation Issues</h2>
+    
+    <h3>❌ Django not found</h3>
+    <p><strong>Error:</strong> <code>ModuleNotFoundError: No module named 'django'</code></p>
+    <p><strong>Solution:</strong> Make sure Django is installed:</p>
+    <pre><code>pip install -r requirements.txt</code></pre>
+    
+    <h3>❌ Spyne compatibility issues</h3>
+    <p><strong>Error:</strong> <code>ModuleNotFoundError: No module named 'spyne.util.six.moves'</code></p>
+    <p><strong>Solution:</strong> Install Spyne from GitHub for Python 3.12+ compatibility:</p>
+    <pre><code>pip install git+https://github.com/arskom/spyne.git</code></pre>
+    
+    <h3>❌ Migration errors</h3>
+    <p><strong>Error:</strong> Migration conflicts or errors</p>
+    <p><strong>Solution:</strong> Delete the database and migrations, then recreate:</p>
+    <pre><code>rm db.sqlite3
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+python manage.py makemigrations
+python manage.py migrate</code></pre>
+</div>
+
+<div class="card">
+    <h2>API Issues</h2>
+    
+    <h3>❌ CSRF verification failed for SOAP requests</h3>
+    <p><strong>Error:</strong> <code>403 Forbidden - CSRF verification failed</code></p>
+    <p><strong>Solution:</strong> SOAP endpoints should be decorated with <code>@csrf_exempt</code>. This is already done in the project.</p>
+    
+    <h3>❌ REST API returns 404</h3>
+    <p><strong>Error:</strong> API endpoint returns 404 Not Found</p>
+    <p><strong>Solution:</strong> Check that:</p>
+    <ul style="margin-left: 1.5rem;">
+        <li>The app is included in <code>INSTALLED_APPS</code></li>
+        <li>URLs are properly configured in <code>urls.py</code></li>
+        <li>The server is running</li>
+        <li>The endpoint path is correct (check for trailing slashes)</li>
+    </ul>
+    
+    <h3>❌ SOAP WSDL not loading</h3>
+    <p><strong>Error:</strong> Cannot access WSDL at <code>/app/soap/?wsdl</code></p>
+    <p><strong>Solution:</strong> Make sure:</p>
+    <ul style="margin-left: 1.5rem;">
+        <li>Spyne is properly installed</li>
+        <li>SOAP views are correctly configured</li>
+        <li>The URL pattern includes the SOAP application</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Database Issues</h2>
+    
+    <h3>❌ Table does not exist</h3>
+    <p><strong>Error:</strong> <code>OperationalError: no such table</code></p>
+    <p><strong>Solution:</strong> Run migrations:</p>
+    <pre><code>python manage.py makemigrations
+python manage.py migrate</code></pre>
+    
+    <h3>❌ Foreign key constraint failed</h3>
+    <p><strong>Error:</strong> Foreign key constraint errors when creating records</p>
+    <p><strong>Solution:</strong> Ensure related objects exist before creating dependent records. Use the sample data command:</p>
+    <pre><code>python manage.py populate_sample_data</code></pre>
+</div>
+
+<div class="card">
+    <h2>Server Issues</h2>
+    
+    <h3>❌ Port already in use</h3>
+    <p><strong>Error:</strong> <code>Error: That port is already in use</code></p>
+    <p><strong>Solution:</strong> Use a different port or kill the process using port 8000:</p>
+    <pre><code># Run on different port
+python manage.py runserver 8080
+
+# Or kill process on port 8000 (Linux/Mac)
+lsof -ti:8000 | xargs kill -9</code></pre>
+    
+    <h3>❌ Static files not loading</h3>
+    <p><strong>Error:</strong> CSS/JS files return 404</p>
+    <p><strong>Solution:</strong> Collect static files:</p>
+    <pre><code>python manage.py collectstatic</code></pre>
+</div>
+
+<div class="card">
+    <h2>Testing Issues</h2>
+    
+    <h3>❌ Sample data command fails</h3>
+    <p><strong>Error:</strong> Errors when running <code>populate_sample_data</code></p>
+    <p><strong>Solution:</strong> Clear existing data and try again:</p>
+    <pre><code>python manage.py flush --no-input
+python manage.py populate_sample_data</code></pre>
+    
+    <h3>❌ API returns empty results</h3>
+    <p><strong>Error:</strong> API calls return empty arrays</p>
+    <p><strong>Solution:</strong> Populate sample data:</p>
+    <pre><code>python manage.py populate_sample_data</code></pre>
+</div>
+
+<div class="card">
+    <h2>Development Tips</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li>Use <code>python manage.py check</code> to verify Django configuration</li>
+        <li>Enable Django debug toolbar for API debugging</li>
+        <li>Check server logs for detailed error messages</li>
+        <li>Use the browsable API in browser for REST endpoints</li>
+        <li>Test SOAP endpoints with tools like SoapUI or Postman</li>
+        <li>Use <code>python manage.py shell</code> for interactive testing</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Getting Help</h2>
+    <p>If you're still experiencing issues:</p>
+    <ul style="margin-left: 1.5rem;">
+        <li>Check the <a href="{% url 'documentation:setup' %}">Setup Guide</a> for detailed instructions</li>
+        <li>Review the <a href="{% url 'documentation:api_reference' %}">API Reference</a> for correct usage</li>
+        <li>Open an issue on GitHub with error details</li>
+        <li>Include Django version, Python version, and full error traceback</li>
+    </ul>
+</div>
+{% endblock %}

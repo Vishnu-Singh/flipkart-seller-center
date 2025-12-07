@@ -1,0 +1,116 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}Quick Start - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🚀 Quick Start Guide</h1>
+    <p>Get started with Flipkart Seller Center APIs in under 5 minutes!</p>
+</div>
+
+<div class="card">
+    <h2>1️⃣ Installation</h2>
+    <pre><code># Clone the repository
+git clone https://github.com/Vishnu-Singh/flipkart-seller-center.git
+cd flipkart-seller-center
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Populate sample data
+python manage.py populate_sample_data
+
+# Start server
+python manage.py runserver</code></pre>
+</div>
+
+<div class="card">
+    <h2>2️⃣ Access the APIs</h2>
+    <p>Once the server is running, you can access:</p>
+    <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+        <li><strong>Documentation Home:</strong> <code>http://localhost:8000/docs/</code></li>
+        <li><strong>API Home:</strong> <code>http://localhost:8000/</code></li>
+        <li><strong>Admin Interface:</strong> <code>http://localhost:8000/admin/</code></li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>3️⃣ Try Your First API Call</h2>
+    
+    <h3>REST API Example</h3>
+    <p>List all products using REST:</p>
+    <pre><code>curl http://localhost:8000/inventory/api/products/</code></pre>
+    
+    <h3>SOAP API Example</h3>
+    <p>Get product details using SOAP:</p>
+    <pre><code>curl -X POST http://localhost:8000/inventory/soap/ \
+  -H "Content-Type: text/xml" \
+  -d '&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+                  xmlns:flip="flipkart.seller.inventory"&gt;
+   &lt;soapenv:Header/&gt;
+   &lt;soapenv:Body&gt;
+      &lt;flip:get_product&gt;
+         &lt;flip:sku&gt;SKU-1001&lt;/flip:sku&gt;
+      &lt;/flip:get_product&gt;
+   &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;'</code></pre>
+</div>
+
+<div class="card">
+    <h2>4️⃣ Explore Available Endpoints</h2>
+    <div class="grid">
+        <div>
+            <h3>Orders API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/orders/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/orders/soap/</code></p>
+        </div>
+        <div>
+            <h3>Inventory API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/inventory/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/inventory/soap/</code></p>
+        </div>
+        <div>
+            <h3>Pricing API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/pricing/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/pricing/soap/</code></p>
+        </div>
+        <div>
+            <h3>Returns API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/returns/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/returns/soap/</code></p>
+        </div>
+        <div>
+            <h3>Shipments API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/shipments/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/shipments/soap/</code></p>
+        </div>
+        <div>
+            <h3>Reports API</h3>
+            <p><span class="badge badge-rest">REST</span> <code>/reports/api/</code></p>
+            <p><span class="badge badge-soap">SOAP</span> <code>/reports/soap/</code></p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>5️⃣ What's Next?</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li><a href="{% url 'documentation:api_reference' %}">📖 Browse the complete API Reference</a></li>
+        <li><a href="{% url 'documentation:setup' %}">⚙️ Read the detailed Setup Guide</a></li>
+        <li><a href="{% url 'documentation:troubleshooting' %}">🔍 Check out Troubleshooting tips</a></li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>💡 Pro Tips</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li>Use the browsable API by visiting REST endpoints in your browser</li>
+        <li>Access WSDL definitions at <code>/&lt;app&gt;/soap/?wsdl</code></li>
+        <li>Use the test script: <code>bash test_apis.sh</code></li>
+        <li>Explore the Django admin at <code>/admin/</code></li>
+    </ul>
+</div>
+{% endblock %}

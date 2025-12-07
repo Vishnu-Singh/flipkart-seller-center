@@ -1,0 +1,135 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}API Reference - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📖 API Reference</h1>
+    <p>Complete reference for all Flipkart Seller Center API endpoints.</p>
+</div>
+
+<div class="card">
+    <h2>API Applications Overview</h2>
+    <p>Select an application to view detailed API documentation:</p>
+    <div class="grid">
+        <a href="{% url 'documentation:api_docs' 'orders' %}" class="btn">Orders API</a>
+        <a href="{% url 'documentation:api_docs' 'inventory' %}" class="btn">Inventory API</a>
+        <a href="{% url 'documentation:api_docs' 'pricing' %}" class="btn">Pricing API</a>
+        <a href="{% url 'documentation:api_docs' 'returns' %}" class="btn">Returns API</a>
+        <a href="{% url 'documentation:api_docs' 'shipments' %}" class="btn">Shipments API</a>
+        <a href="{% url 'documentation:api_docs' 'reports' %}" class="btn">Reports API</a>
+    </div>
+</div>
+
+{% for app_name, app_data in api_docs.items %}
+<div class="card">
+    <h2>{{ app_name|title }} API</h2>
+    <p>{{ app_data.description }}</p>
+    
+    <h3><span class="badge badge-rest">REST</span> Endpoints</h3>
+    {% for endpoint in app_data.rest_endpoints %}
+    <div style="border-left: 3px solid #667eea; padding-left: 1rem; margin: 1rem 0;">
+        <p>
+            <span class="badge badge-{{ endpoint.method|lower }}">{{ endpoint.method }}</span>
+            <code>{{ endpoint.path }}</code>
+        </p>
+        <p><strong>{{ endpoint.description }}</strong></p>
+        {% if endpoint.parameters %}
+        <p><strong>Parameters:</strong> 
+            {% for param in endpoint.parameters %}
+                <code>{{ param }}</code>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if endpoint.body %}
+        <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer;"><strong>Request Body</strong></summary>
+            <pre style="margin-top: 0.5rem;"><code>{{ endpoint.body|safe }}</code></pre>
+        </details>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <h3><span class="badge badge-soap">SOAP</span> Operations</h3>
+    <p><strong>WSDL:</strong> <code>/{{ app_name }}/soap/?wsdl</code></p>
+    {% for operation in app_data.soap_operations %}
+    <div style="border-left: 3px solid #2196F3; padding-left: 1rem; margin: 1rem 0;">
+        <p><strong>{{ operation.operation }}</strong></p>
+        <p>{{ operation.description }}</p>
+        {% if operation.parameters %}
+        <p><strong>Parameters:</strong> 
+            {% for param in operation.parameters %}
+                <code>{{ param }}</code>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+
+<div class="card">
+    <h2>Authentication</h2>
+    <p>Currently, the APIs use Django's default authentication. For production use:</p>
+    <ul style="margin-left: 1.5rem;">
+        <li>Implement JWT or OAuth2 authentication</li>
+        <li>Use API keys for SOAP requests</li>
+        <li>Enable HTTPS for all API calls</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Rate Limiting</h2>
+    <p>Rate limiting is not currently enforced but should be implemented for production:</p>
+    <pre><code># Example rate limit configuration
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/hour',
+        'user': '1000/hour'
+    }
+}</code></pre>
+</div>
+
+<div class="card">
+    <h2>Error Handling</h2>
+    <p>All APIs return standard HTTP status codes:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Status Code</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>200</code></td>
+                <td>Success</td>
+            </tr>
+            <tr>
+                <td><code>201</code></td>
+                <td>Created</td>
+            </tr>
+            <tr>
+                <td><code>400</code></td>
+                <td>Bad Request</td>
+            </tr>
+            <tr>
+                <td><code>401</code></td>
+                <td>Unauthorized</td>
+            </tr>
+            <tr>
+                <td><code>404</code></td>
+                <td>Not Found</td>
+            </tr>
+            <tr>
+                <td><code>500</code></td>
+                <td>Internal Server Error</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'documentation/base.html' %}
+
+{% block title %}Setup Guide - Flipkart Seller Center API Documentation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>⚙️ Setup Guide</h1>
+    <p>Follow these steps to set up the Flipkart Seller Center API project on your local machine.</p>
+</div>
+
+<div class="card">
+    <h2>📋 Prerequisites</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li>Python 3.8 or higher</li>
+        <li>pip (Python package installer)</li>
+        <li>Git</li>
+        <li>Virtual environment (recommended)</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>📦 Installation</h2>
+    
+    {% if installation_steps %}
+        {% for step in installation_steps %}
+        <h3>Step {{ step.step_number }}: {{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+        {% if step.code_example %}
+        <pre><code>{{ step.code_example }}</code></pre>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <h3>Step 1: Clone the Repository</h3>
+    <p>Clone the project repository from GitHub:</p>
+    <pre><code>git clone https://github.com/Vishnu-Singh/flipkart-seller-center.git
+cd flipkart-seller-center</code></pre>
+    
+    <h3>Step 2: Install Dependencies</h3>
+    <p>Install all required Python packages:</p>
+    <pre><code>pip install -r requirements.txt</code></pre>
+    
+    <h3>Step 3: Run Database Migrations</h3>
+    <p>Set up the database schema:</p>
+    <pre><code>python manage.py makemigrations
+python manage.py migrate</code></pre>
+    
+    <h3>Step 4: Create Superuser (Optional)</h3>
+    <p>Create an admin user to access the Django admin interface:</p>
+    <pre><code>python manage.py createsuperuser</code></pre>
+    
+    <h3>Step 5: Populate Sample Data (Optional)</h3>
+    <p>Load sample data for testing:</p>
+    <pre><code>python manage.py populate_sample_data</code></pre>
+    
+    <h3>Step 6: Start the Development Server</h3>
+    <p>Run the Django development server:</p>
+    <pre><code>python manage.py runserver</code></pre>
+    <p>The server will start at <code>http://localhost:8000/</code></p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>🔧 Configuration</h2>
+    
+    {% if configuration_steps %}
+        {% for step in configuration_steps %}
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+        {% if step.code_example %}
+        <pre><code>{{ step.code_example }}</code></pre>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <h3>Database Configuration</h3>
+    <p>The project uses SQLite by default. To use a different database, update the <code>DATABASES</code> setting in <code>flipkart_seller_center/settings.py</code>:</p>
+    <pre><code>DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_db_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}</code></pre>
+    
+    <h3>API Configuration</h3>
+    <p>Update Flipkart API credentials in <code>settings.py</code>:</p>
+    <pre><code>FLIPKART_API_CONFIG = {
+    'BASE_URL': 'https://api.flipkart.net/sellers',
+    'API_KEY': 'your-api-key',
+    'API_SECRET': 'your-api-secret',
+    'TIMEOUT': 30,
+}</code></pre>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>✅ Testing</h2>
+    
+    {% if testing_steps %}
+        {% for step in testing_steps %}
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+        {% if step.code_example %}
+        <pre><code>{{ step.code_example }}</code></pre>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <h3>Run the Test Script</h3>
+    <p>Use the provided test script to verify all endpoints:</p>
+    <pre><code>bash test_apis.sh</code></pre>
+    
+    <h3>Test REST Endpoints</h3>
+    <p>Test REST API endpoints using curl:</p>
+    <pre><code>curl http://localhost:8000/orders/api/orders/</code></pre>
+    
+    <h3>Access Browsable API</h3>
+    <p>Visit REST endpoints in your browser:</p>
+    <ul style="margin-left: 1.5rem;">
+        <li><code>http://localhost:8000/orders/api/</code></li>
+        <li><code>http://localhost:8000/inventory/api/</code></li>
+        <li><code>http://localhost:8000/pricing/api/</code></li>
+    </ul>
+    {% endif %}
+</div>
+
+{% if deployment_steps %}
+<div class="card">
+    <h2>🚀 Deployment</h2>
+    {% for step in deployment_steps %}
+    <h3>{{ step.title }}</h3>
+    <p>{{ step.description }}</p>
+    {% if step.code_example %}
+    <pre><code>{{ step.code_example }}</code></pre>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h2>📌 Next Steps</h2>
+    <ul style="margin-left: 1.5rem;">
+        <li><a href="{% url 'documentation:api_reference' %}">Explore the API Reference</a></li>
+        <li><a href="{% url 'documentation:quick_start' %}">Follow the Quick Start Guide</a></li>
+        <li><a href="{% url 'documentation:troubleshooting' %}">Check Troubleshooting Guide</a></li>
+    </ul>
+</div>
+{% endblock %}
